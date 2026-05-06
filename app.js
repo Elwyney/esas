@@ -11,7 +11,7 @@ console.log(`что здесь ${config.USERNAME}`);
 const logger = []
 async function main() {
   console.log("\x1b[91m%s\x1b[0m", `Авторизация...`);
-  const cookie = await auth('nadyrgulov', '0426Nrb!gvrrvg*!');
+  const cookie = await auth('', '');
   console.log("\x1b[96m%s\x1b[0m", `Авторизация успешна`);
   console.log("\x1b[90m%s\x1b[0m", `Куки: ${cookie}`);
   await setCookies(cookie);
