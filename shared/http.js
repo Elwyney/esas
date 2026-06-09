@@ -1,9 +1,13 @@
-const { BASE_URL } = require("./config");
+import { BASE_URL, USERNAME } from './config.js';
 let COOKIES = "";
 
 async function setCookies(cookies) {
-    COOKIES = cookies + ' login=nadyrgulov;';
+    if (!cookies) {
+        throw new Error('Не получены cookies авторизации');
+    }
+    COOKIES = cookies + ` login=${USERNAME};`;
 }
+
 async function post(url, body) {
     const HEADERS = {
         "accept": "*/*",
@@ -22,7 +26,16 @@ async function post(url, body) {
     });
 
     const text = await res.text();
-    try { return JSON.parse(text); } catch (e) { throw new Error(`Невалидный JSON: ${text.slice(0, 200)}`); }
+    if (!res.ok) {
+        throw new Error(`HTTP ${res.status}: ${text.slice(0, 200)}`);
+    }
+
+    try {
+        return JSON.parse(text);
+    } catch {
+        throw new Error(`Невалидный JSON: ${text.slice(0, 200)}`);
+    }
 }
-module.exports = { post, setCookies }
+
+export { post, setCookies };
 

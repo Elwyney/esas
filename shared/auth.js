@@ -1,4 +1,4 @@
-const { BASE_URL } = require("./config");
+import { BASE_URL } from './config.js';
 
 async function auth(username, password) {
   const response = await fetch(`${BASE_URL}/?c=main&m=index&method=Logon&login=${username}`, {
@@ -18,8 +18,18 @@ async function auth(username, password) {
     },
     body: `login=${username}&psw=${password}&swUserRegion=&swUserDBType=`
   });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Ошибка авторизации HTTP ${response.status}: ${text.slice(0, 200)}`);
+  }
+
   const setCookie = response.headers.get('set-cookie');
-  return setCookie
+  if (!setCookie) {
+    throw new Error('Сервер не вернул set-cookie после авторизации');
+  }
+
+  return setCookie;
 }
 
-module.exports = { auth }
+export { auth };

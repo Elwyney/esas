@@ -1,15 +1,13 @@
-const { post } = require("./http");
-const { signFile, computeGostHash } = require("./crypto");
-const path = require('path');
-const fs = require('fs');
+import { post } from '../../shared/http.js';
+import { signFile, computeGostHash } from '../../shared/crypto.js';
+import path from 'path';
+import fs from 'fs';
 
-
-
-
+// --- 1. Поиск документов ---
 // --- 1. Поиск документов ---
 async function fetchData(lpu, from, to, delay = 1000) {
     const url = `?c=EMD&m=loadEMDSignBundleWindow&_dc=${Date.now()}`;
-    const body = `EMDLpu_id=21&LpuBuilding_id=${lpu}&EMDRegistry_EMDDate_period=${from}%20%E2%80%94%20${to}&EMDRegistry_Num=&EMDVersionStatus=&EMDDocumentType_Code=0&EMDErrorListGroup_id=&ReceptType_id=&isLpuSignNeeded=on&hidedeletedoc=1&page=1&LpuSection_id=null&Person_FIO=&MedPersonalFioIdArray=&EvnNum=&EvnClass_id=&Diag_Code_from=null&Diag_Code_to=null&TreatmentClass_id=&ResultClass_id=&VizitType_id=&PrehospType_id=&LeaveType_id=&PrehospArrive_id=&PrehospStatus_id=&limit=5000&isMOSign=true&start=0`;
+    const body = `EMDLpu_id=21&LpuBuilding_id=${lpu}&EMDRegistry_EMDDate_period=${from}%20%E2%80%94%20${to}&EMDRegistry_Num=&EMDVersionStatus=&EMDDocumentType_Code=350,347,509,10,369,367,54,68,368,380,184,396,74,40,44,42,37,41,39,56,79,91,49,480,73,8,69,46,45,71,502,51,33,376,3,81,241,346,57,107,34,362,357,361,341,38,381,532,345,375,6,371,5,85,7,109,108,378,254,12,533,36,372,11,121,340,86,48,50,141,35,53,374,503,47,66,122,77,370,531,343,142,89,78,90,52,344,88,67,113,80,106,352,72,59,1,2,379,351&EMDErrorListGroup_id=&ReceptType_id=&isLpuSignNeeded=on&hidedeletedoc=1&page=1&LpuSection_id=null&Person_FIO=&MedPersonalFioIdArray=&EvnNum=&EvnClass_id=&Diag_Code_from=null&Diag_Code_to=null&TreatmentClass_id=&ResultClass_id=&VizitType_id=&PrehospType_id=&LeaveType_id=&PrehospArrive_id=&PrehospStatus_id=&limit=5000&isMOSign=true&start=0`;
     try {
         const result = await post(url, body);
         return result;
@@ -106,4 +104,16 @@ async function signDocument({ objectName, objectId, certId, versionId, versionNu
     return result;
 }
 
-module.exports = { searchDocuments, signDocument }
+export { searchDocuments, signDocument };
+
+
+
+
+
+
+
+
+
+
+
+

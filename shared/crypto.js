@@ -1,9 +1,9 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs';
+import { execSync } from 'child_process';
 const CRYPTCP = '/opt/cprocsp/bin/amd64/cryptcp';
 const CPVERIFY = '/opt/cprocsp/bin/amd64/cpverify';
 const THUMBPRINT = 'EB9F9A5F1DFA646133BD79E116380E3B835D194C';
-const { execSync } = require('child_process');
 function signFile(filePath) {
     const tmpDir = fs.mkdtempSync('/tmp/sign_');
     const tmpFile = path.join(tmpDir, 'doc.xml');
@@ -32,4 +32,4 @@ function computeGostHash(filePath) {
     }).trim();
     return Buffer.from(hex, 'hex').toString('base64');
 }
-module.exports = { signFile, computeGostHash };
+export { signFile, computeGostHash };
