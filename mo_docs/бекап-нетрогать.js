@@ -10,7 +10,7 @@ const BASE_URL = 'https://promedufa.promedweb.ru';
 const THUMBPRINT = 'EB9F9A5F1DFA646133BD79E116380E3B835D194C';
 
 // Берем из актуальной сессии в браузере (cookie).
-const COOKIES = "csrfToken=3947cc3868f2627eacf786d8ed8abed4f109c5ec6a70b65b63122ca26e03ab6f; PHPSESSID=6kff9gr0kf4cvhaaocgtb0aj3k; login=nadyrgulov; JSESSIONID=B3269107C795A71B27FAD008524541D6";
+const COOKIES = process.env.COOKIES || "";
 
 function getCookieValue(cookieHeader, key) {
   const match = cookieHeader.match(new RegExp(`(?:^|;\\s*)${key}=([^;]+)`));
@@ -368,9 +368,9 @@ main().catch(console.error);
 //   const page = await browser.newPage();
 //   await page.goto(ECP_ORIGIN, { timeout: 160000 });
 //   await page.waitForSelector('#promed-login');
-//   await page.type('#promed-login', 'nadyrgulov');
+//   await page.type('#promed-login', process.env.USERNAME);
 //   await page.waitForSelector('#promed-password');
-//   await page.type('#promed-password', '0426Nrb!gvrrvg*!');
+//   await page.type('#promed-password', process.env.PASSWORD);
 //   await page.click('button[type="submit"]');
 
 
